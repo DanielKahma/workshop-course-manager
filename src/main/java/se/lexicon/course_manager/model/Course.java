@@ -3,6 +3,7 @@ package se.lexicon.course_manager.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 
 // TODO implement model
@@ -19,24 +20,30 @@ public class Course implements Serializable {
     //Constructors
 
     public Course(){
+        this.students = new HashSet<>();
 
     }
     public Course(int id){
+        this();
         this.id = id;
 
     }
-    public Course(String courseName, LocalDate startDate, int weekDuration, Collection<Student> students){
+    public Course(int id, String courseName){
+        this(id);
         this.courseName = courseName;
-        this.startDate = startDate;
-        this.weekDuration = weekDuration;
-        this.students = students;
 
+    }
+    public Course(int id, String courseName, LocalDate startDate){
+        this(id, courseName);
+        this.startDate = startDate;
+
+    }
+    public Course(int id, String courseName, LocalDate startDate, int weekDuration){
+        this(id, courseName, startDate);
+        this.weekDuration = weekDuration;
     }
     public Course(int id, String courseName, LocalDate startDate, int weekDuration, Collection<Student> students){
-        this.id = id;
-        this.courseName = courseName;
-        this.startDate = startDate;
-        this.weekDuration = weekDuration;
+        this(id, courseName, startDate, weekDuration);
         this.students = students;
 
     }
@@ -83,12 +90,21 @@ public class Course implements Serializable {
         this.students = students;
     }
 
-    public boolean enrollStudent(Student student){
-        return true;
-    }
+    //Remove and Add Students
 
+    public boolean enrollStudent(Student student){
+        if (student == null)
+            return false;
+
+        return students.add(student);
+
+    }
     public boolean unrollStudent(Student student){
-        return true;
+        if (student == null)
+            return false;
+
+        return students.remove(student);
+
     }
 
     //Equals & HashCode

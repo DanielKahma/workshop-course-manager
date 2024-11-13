@@ -4,10 +4,12 @@ public class CourseSequencer {
     private static int courseSequencer;
 
     public static int nextCourseId(){
+
         return ++courseSequencer;
     }
 
     public static int getCourseSequencer() {
+
         return courseSequencer;
     }
 

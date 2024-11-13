@@ -2,6 +2,7 @@ package se.lexicon.course_manager.data.dao;
 
 
 
+import se.lexicon.course_manager.data.sequencers.CourseSequencer;
 import se.lexicon.course_manager.model.Course;
 
 import java.time.LocalDate;
@@ -16,46 +17,59 @@ public class CourseCollectionRepository implements CourseDao{
 
 
     public CourseCollectionRepository(Collection<Course> courses) {
+
         this.courses = courses;
     }
 
     @Override
     public Course createCourse(String courseName, LocalDate startDate, int weekDuration) {
-        return null;
+
+        int id = CourseSequencer.nextCourseId();
+        Course course;
+        course = new Course(id, courseName,startDate, weekDuration);
+
+        return course;
     }
 
     @Override
     public Course findById(int id) {
+
         return null;
     }
 
     @Override
     public Collection<Course> findByNameContains(String name) {
+
         return null;
     }
 
     @Override
     public Collection<Course> findByDateBefore(LocalDate end) {
+
         return null;
     }
 
     @Override
     public Collection<Course> findByDateAfter(LocalDate start) {
+
         return null;
     }
 
     @Override
     public Collection<Course> findAll() {
+
         return null;
     }
 
     @Override
     public Collection<Course> findByStudentId(int studentId) {
+
         return null;
     }
 
     @Override
     public boolean removeCourse(Course course) {
+
         return false;
     }
 
