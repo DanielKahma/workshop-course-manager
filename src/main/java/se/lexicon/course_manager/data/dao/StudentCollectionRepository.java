@@ -1,11 +1,10 @@
 package se.lexicon.course_manager.data.dao;
 
-
-
 import se.lexicon.course_manager.data.sequencers.StudentSequencer;
 import se.lexicon.course_manager.model.Student;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 
 // TODO provide proper implementation.
@@ -23,28 +22,45 @@ public class StudentCollectionRepository implements StudentDao {
     public Student createStudent(String name, String email, String address) {
 
         int id = StudentSequencer.nextStudentId();
-        Student student;
-        student = new Student(id, name, email, address);
+        Student student = new Student(id, name.trim(), email, address);
 
-        return student;
+        //Ternary operator == if-statement
+        return students.add(student) ? student : null;
 
     }
-
     @Override
     public Student findByEmailIgnoreCase(String email) {
 
+        for (Student student : students){
+            if (student.getEmail().trim().equalsIgnoreCase(email)){
 
+                return student;
+            }
+        }
         return null;
     }
 
     @Override
     public Collection<Student> findByNameContains(String name) {
 
-        return null;
+        Collection<Student> foundMatches = new HashSet<>();
+
+        for (Student student : students){
+            if (student.getName().trim().toLowerCase().contains(name.trim().toLowerCase()));
+        }
+        return foundMatches;
     }
 
     @Override
     public Student findById(int id) {
+
+        for (Student student : students) {
+            if (student.getId() == id) {
+
+                return student;
+            }
+        }
+
 
         return null;
     }
@@ -52,7 +68,11 @@ public class StudentCollectionRepository implements StudentDao {
     @Override
     public Collection<Student> findAll() {
 
-        return null;
+        return new HashSet<>(students);
+
+        //or : return Collections.unmodifiableCollection(students);
+
+
     }
 
     @Override
